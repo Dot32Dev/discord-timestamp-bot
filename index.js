@@ -10,7 +10,7 @@ client.on("messageCreate", message => {
 	console.log(message.content)
 
 	if (message.content.includes("pig")) {
-		message.reply(message.content.replace("pig", "pog").replace("@", "@ "))
+		message.reply(message.content.replaceAll("pig", "pog").replaceAll("@", "@ "))
 	}
 })
 
