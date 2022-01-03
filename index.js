@@ -7,11 +7,23 @@ let prefix = "!t"
 
 client.on("ready", () => console.log("Bot is online!"))
 client.on("messageCreate", message => {
+	var d = new Date()
+	var year = d.getUTCFullYear()
+	var month = d.getUTCMonth()
+	var day = d.getUTCDate()
+	var hour = d.getUTCHours()
+	var minute = d.getUTCMinutes()
+	var second = d.getUTCSeconds()
+
 	let simplified = message.content.replace("!timestamp ", "").replace("!timer ", "").replaceAll(",", "").replaceAll("and", "").replaceAll("s", "").replaceAll(/\s{2,}/g, ' ')
 	let data = collectData(simplified.split(" "))
+	var datum = new Date(Date.UTC(year, month, day + data.day + data.week*7, hour + data.hour, minute + data.minute, second))
 
 	if (message.content.startsWith("!timer")) {
-		message.reply(JSON.stringify(collectData(simplified.split(" "))))
+		message.reply(`<t:${datum.getTime()/1000}:R>`)
+	}
+	if (message.content.startsWith("!timestamp")) {
+		message.reply("`<t:" + datum.getTime()/1000 + ":R>`")
 	}
 	// console.log(simplified)
 	// console.log(collectData(simplified.split(" ")))
