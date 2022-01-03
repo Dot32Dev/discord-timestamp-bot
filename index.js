@@ -7,15 +7,15 @@ let prefix = "!t"
 
 client.on("ready", () => console.log("Bot is online!"))
 client.on("messageCreate", message => {
-	// console.log(message.content)
+	let simplified = message.content.replace("!timestamp ", "").replace("!timer ", "").replaceAll(",", "").replaceAll("and", "").replaceAll("s", "").replaceAll(/\s{2,}/g, ' ')
+	let data = collectData(simplified.split(" "))
 
-	// if (message.content.includes("pig")) {
-	// 	message.reply(message.content.replaceAll("pig", "pog").replaceAll("@", "@ "))
-	// }
-	let simplified = message.content.replaceAll(",", "").replaceAll("and", "").replaceAll("s", "").replaceAll(/\s{2,}/g, ' ')
-	console.log(simplified)
-	console.log(collectData(simplified.split(" ")))
-	if (collectData(simplified.split(" "))) { message.reply(JSON.stringify(collectData(simplified.split(" ")))) }
+	if (message.content.startsWith("!timer")) {
+		message.reply(JSON.stringify(collectData(simplified.split(" "))))
+	}
+	// console.log(simplified)
+	// console.log(collectData(simplified.split(" ")))
+	// if (collectData(simplified.split(" "))) { message.reply(JSON.stringify(collectData(simplified.split(" ")))) }
 })
 
 function collectData(args) {
