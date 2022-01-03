@@ -15,6 +15,7 @@ client.on("messageCreate", message => {
 	let simplified = message.content.replaceAll(",", "").replaceAll("and", "").replaceAll("s", "").replaceAll(/\s{2,}/g, ' ')
 	console.log(simplified)
 	console.log(collectData(simplified.split(" ")))
+	if (collectData(simplified.split(" "))) { message.reply(JSON.stringify(collectData(simplified.split(" ")))) }
 })
 
 function collectData(args) {
@@ -54,7 +55,7 @@ function collectData(args) {
 			
 			if (!keys.includes(nType)) {
 				// Error
-				console.log("Wrong Type: availanle are: hours, minutes, days")
+				console.log("Please specify weeks, days, hours or minutes")
 				return false
 			}
 			
