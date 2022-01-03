@@ -7,11 +7,62 @@ let prefix = "!t"
 
 client.on("ready", () => console.log("Bot is online!"))
 client.on("messageCreate", message => {
-	console.log(message.content)
+	// console.log(message.content)
 
-	if (message.content.includes("pig")) {
-		message.reply(message.content.replaceAll("pig", "pog").replaceAll("@", "@ "))
-	}
+	// if (message.content.includes("pig")) {
+	// 	message.reply(message.content.replaceAll("pig", "pog").replaceAll("@", "@ "))
+	// }
+	let simplified = message.content.replaceAll(",", "").replaceAll("and", "").replaceAll("s", "").replaceAll(/\s{2,}/g, ' ')
+	console.log(simplified)
+	console.log(collectData(simplified.split(" ")))
 })
+
+function collectData(args) {
+	var information = {  
+		week: 0,
+		hour: 0,
+		day: 0,
+		minute: 0
+	};
+
+	const keys = Object.keys(args);
+
+	for (let i = 0; i < args.length; i++) {
+		let arg = args[i]
+		
+		if ((i + 1) % 2 == 0) {
+			// Error
+				console.log("Something went horrible wrong.")
+				return false
+		} else {
+			// Expecting a number here
+			if (isNaN(arg)) {
+				// Error
+				console.log("Please use the correct format: '!timestamp 5 hours'")
+				return false 
+			}
+			if (i >= args.length - 1) {
+				// Error
+				console.log("Please use the correct format: '!timestamp 5 hours 3 minutes'")
+				return false 
+			}
+
+			// Checking what kind of number
+			i++;
+
+			const nType = args[i];
+
+			if (keys.includes(nType))
+				// Error
+				console.log("Wrong Type: availanle are: hours, minutes, days")
+				return false
+			
+			// Workaround to access a variable in an object by string in ts
+			information[nType] = Number(arg)
+		}
+	}
+	
+	return information
+}
 
 client.login(token.token)
