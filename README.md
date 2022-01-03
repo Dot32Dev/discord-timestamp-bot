@@ -1,2 +1,2 @@
 # discord-timestamp-bot
-https://discordtimestampgenerator.netlify.app/ In the form of a discord bot!
+expects a node modules folder with Discord.js 
