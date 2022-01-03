@@ -20,7 +20,7 @@ client.on("messageCreate", message => {
 	var datum = new Date(Date.UTC(year, month, day + data.day + data.week*7, hour + data.hour, minute + data.minute, second))
 
 	if (message.content.startsWith("!timer")) {
-		message.reply(`<t:${datum.getTime()/1000}:R>`)
+		message.reply(`Timer ends <t:${datum.getTime()/1000}:R>`)
 	}
 	if (message.content.startsWith("!timestamp")) {
 		message.reply("`<t:" + datum.getTime()/1000 + ":R>`")
