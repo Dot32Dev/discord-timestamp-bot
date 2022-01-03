@@ -18,14 +18,14 @@ client.on("messageCreate", message => {
 })
 
 function collectData(args) {
-	var information = {  
+	let information = {  
 		week: 0,
 		hour: 0,
 		day: 0,
 		minute: 0
 	};
 
-	const keys = Object.keys(args);
+	const keys = Object.keys(information);
 
 	for (let i = 0; i < args.length; i++) {
 		let arg = args[i]
@@ -51,11 +51,12 @@ function collectData(args) {
 			i++;
 
 			const nType = args[i];
-
-			if (keys.includes(nType))
+			
+			if (!keys.includes(nType)) {
 				// Error
 				console.log("Wrong Type: availanle are: hours, minutes, days")
 				return false
+			}
 			
 			// Workaround to access a variable in an object by string in ts
 			information[nType] = Number(arg)
@@ -64,5 +65,6 @@ function collectData(args) {
 	
 	return information
 }
+
 
 client.login(token.token)
