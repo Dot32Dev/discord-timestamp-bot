@@ -7,23 +7,33 @@ let prefix = "!t"
 
 client.on("ready", () => console.log("Bot is online!"))
 client.on("messageCreate", message => {
-	var d = new Date()
-	var year = d.getUTCFullYear()
-	var month = d.getUTCMonth()
-	var day = d.getUTCDate()
-	var hour = d.getUTCHours()
-	var minute = d.getUTCMinutes()
-	var second = d.getUTCSeconds()
+	// var error = false
+
+	let d = new Date()
+	let year = d.getUTCFullYear()
+	let month = d.getUTCMonth()
+	let day = d.getUTCDate()
+	let hour = d.getUTCHours()
+	let minute = d.getUTCMinutes()
+	let second = d.getUTCSeconds()
 
 	let simplified = message.content.replace("!timestamp ", "").replace("!timer ", "").replaceAll(",", "").replaceAll("and", "").replaceAll("s", "").replaceAll(/\s{2,}/g, ' ')
 	let data = collectData(simplified.split(" "))
-	var datum = new Date(Date.UTC(year, month, day + data.day + data.week*7, hour + data.hour, minute + data.minute, second))
+	let datum = new Date(Date.UTC(year, month, day + data.day + data.week*7, hour + data.hour, minute + data.minute, second))
 
 	if (message.content.startsWith("!timer")) {
-		message.reply(`Timer ends <t:${datum.getTime()/1000}:R>`)
+		if (!data || isNaN(datum.getTime()) ) {
+			message.reply("Error: Please specify `weeks`, `days`, `hours` or `minutes`. It is also possible you entered a number out of range.")
+		} else {
+			message.reply(`Timer ends <t:${datum.getTime()/1000}:R>`)
+		}
 	}
 	if (message.content.startsWith("!timestamp")) {
-		message.reply("`<t:" + datum.getTime()/1000 + ":R>`")
+		if (!data || isNaN(datum.getTime()) ) {
+			message.reply("Error: Please specify `weeks`, `days`, `hours` or `minutes`. It is also possible the numbers you entered were invalid.")
+		} else {
+			message.reply("`<t:" + datum.getTime()/1000 + ":R>`")
+		}
 	}
 	// console.log(simplified)
 	// console.log(collectData(simplified.split(" ")))
@@ -45,18 +55,18 @@ function collectData(args) {
 		
 		if ((i + 1) % 2 == 0) {
 			// Error
-				console.log("Something went horrible wrong.")
+				// error = "Something went horrible wrong."
 				return false
 		} else {
 			// Expecting a number here
 			if (isNaN(arg)) {
 				// Error
-				console.log("Please use the correct format: '!timestamp 5 hours'")
+				// error = "Please use the correct format: '!timestamp 5 hours'"
 				return false 
 			}
 			if (i >= args.length - 1) {
 				// Error
-				console.log("Please use the correct format: '!timestamp 5 hours 3 minutes'")
+				// error = "Please use the correct format: '!timestamp 5 hours 3 minutes'"
 				return false 
 			}
 
@@ -67,7 +77,7 @@ function collectData(args) {
 			
 			if (!keys.includes(nType)) {
 				// Error
-				console.log("Please specify weeks, days, hours or minutes")
+				// error = "Please specify weeks, days, hours or minutes"
 				return false
 			}
 			
