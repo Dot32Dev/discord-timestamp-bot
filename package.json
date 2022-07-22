@@ -10,7 +10,7 @@
   "author": "Dot32",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "^13.5.0",
-    "dotenv": "^16.0.0"
+    "@bergerapi/env": "^0.0.4",
+    "discord.js": "^13.5.0"
   }
 }
