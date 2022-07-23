@@ -1,8 +1,8 @@
 import * as Discord from "discord.js"
-import dotenv from "dotenv"
+import env from "@bergerapi/env"
 
 const intents = new Discord.Intents(32767)
-const client = new Discord.Client({intents})
+const client = new Discord.Client({ intents })
 
 /**
  * This function is needed to parse the data from the message.
@@ -20,7 +20,7 @@ function collectData(args) {
     const keys = Object.keys(information);
 
     for (let i = 0; i < args.length; i++) {
-        let arg = args[i]
+        let arg = args[ i ]
 
         if ((i + 1) % 2 === 0) return false
         else {
@@ -32,12 +32,12 @@ function collectData(args) {
 
             i++;
 
-            const nType = args[i];
+            const nType = args[ i ];
 
             if (!keys.includes(nType))
                 return false
 
-            information[nType] = Number(arg)
+            information[ nType ] = Number(arg)
         }
     }
 
@@ -48,7 +48,7 @@ function collectData(args) {
  * This function starts the entire discord bot.
  */
 async function main() {
-    dotenv.config()
+    env.default()
 
     // Check if the bot is ready to start
     if (!process.env.TOKEN)
@@ -92,4 +92,4 @@ async function main() {
     await client.login(process.env.TOKEN)
 }
 
-main().then(() => {})
+main().then(() => { })
